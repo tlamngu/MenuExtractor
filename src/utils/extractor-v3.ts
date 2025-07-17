@@ -41,7 +41,7 @@ export class Checkpoint {
  * This is a direct port of the provided Python pandas script.
  * @param worksheet The xlsx.WorkSheet object from the xlsx library.
  */
-export function procSheet(worksheet: xlsx.WorkSheet): void {
+export function procSheet(worksheet: xlsx.WorkSheet): MenuItem[] {
   const data: any[][] = xlsx.utils.sheet_to_json(worksheet, {
     header: 1,
     defval: null,
@@ -81,7 +81,7 @@ export function procSheet(worksheet: xlsx.WorkSheet): void {
     console.error(
       "Could not determine the data table range. Check for 'Uplift Ratio' and 'Ghi chú' keywords."
     );
-    return;
+    return [];
   }
 
   const sub_data_rows = data.slice(start[1], end[1] + 1);
@@ -275,7 +275,7 @@ export function procSheet(worksheet: xlsx.WorkSheet): void {
       });
     }
   }
-
+  let food_items:MenuItem[] = []
   // --- Python: Display the nested segmented dataframes ---
   console.log("\n\n--- FINAL NESTED STRUCTURE ---");
   for (const { className, classData } of nested_structured_dataframes) {
@@ -317,6 +317,7 @@ export function procSheet(worksheet: xlsx.WorkSheet): void {
           items.push(newdat);
         }
         console.table(items)
+        items.forEach((e)=>{food_items.push(e)});
       }
     } else {
       let items: MenuItem[] = [];
@@ -349,6 +350,10 @@ export function procSheet(worksheet: xlsx.WorkSheet): void {
         items.push(newdat);
       }
       console.table(items);
+      items.forEach((e)=>{food_items.push(e)});
     }
   }
+  console.log("Res ----------------------")
+  console.table(food_items)
+  return food_items;
 }
