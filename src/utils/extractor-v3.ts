@@ -278,29 +278,27 @@ export function procSheet(worksheet: xlsx.WorkSheet): MenuItem[] {
       });
     }
   }
-  let food_items:MenuItem[] = []
+  let food_items: MenuItem[] = [];
   // --- Python: Display the nested segmented dataframes ---
+
   console.log("\n\n--- FINAL NESTED STRUCTURE ---");
   for (const { className, classData } of nested_structured_dataframes) {
     console.log(`\n--- Class Segment: ${className} ---`);
+
     if (classData.aircraft_segments.length > 0) {
       for (const aircraft_segment of classData.aircraft_segments) {
         const aircraft_name =
           aircraft_segment.df[0]?.[sub_heads[0]] || "Unknown Aircraft";
         console.log(`----- Aircraft Sub-segment for: ${aircraft_name} -----`);
-        // console.table(aircraft_segment.df);
 
         let items: MenuItem[] = [];
 
-        // console.table(aircraft_segment.df)
-        let Class = aircraft_segment.df[0]["Uplift Ratio"];
+        const Class = className;
         let Menu = aircraft_segment.df[0]["Qty"];
         let Cycle = aircraft_segment.df[0]["Remark"];
         console.log("Class:", Class, "Menu:", Menu, "Cycle:", Cycle);
 
         for (let i = 1; i < aircraft_segment.df.length; i++) {
-          // Plans of data construct:
-          // console.table(aircraft_segment.df[i])
           let newdat: MenuItem = {
             "Uplift Ratio":
               typeof aircraft_segment.df[i]["Uplift Ratio"] == "number"
@@ -309,9 +307,13 @@ export function procSheet(worksheet: xlsx.WorkSheet): MenuItem[] {
             Name: aircraft_segment.df[i]["Component Description"],
             MenuId: Menu,
             Remark: aircraft_segment.df[i]["Remark"],
-            class: Class,
+            class: Class, // Use the corrected 'Class' variable
             Cycle: Cycle,
-            AircraftType: aircraft_name.toLowerCase().includes("NEO".toLowerCase()) ? "NEO" : "normal",
+            AircraftType: aircraft_name
+              .toLowerCase()
+              .includes("NEO".toLowerCase())
+              ? "NEO"
+              : "normal",
             EndTime: null,
             StartTime: null,
             Note: null,
@@ -319,21 +321,20 @@ export function procSheet(worksheet: xlsx.WorkSheet): MenuItem[] {
           };
           items.push(newdat);
         }
-        console.table(items)
-        items.forEach((e)=>{food_items.push(e)});
+        console.table(items);
+        items.forEach((e) => {
+          food_items.push(e);
+        });
       }
     } else {
       let items: MenuItem[] = [];
 
-      // console.table(classData.class_df)
-      let Class = classData.class_df[0]["Uplift Ratio"];
+      const Class = className;
       let Menu = classData.class_df[0]["Qty"];
       let Cycle = classData.class_df[0]["Remark"];
       console.log("Class:", Class, "Menu:", Menu, "Cycle:", Cycle);
 
       for (let i = 1; i < classData.class_df.length; i++) {
-        // Plans of data construct:
-        // console.table(classData.class_df[i])
         let newdat: MenuItem = {
           "Uplift Ratio":
             typeof classData.class_df[i]["Uplift Ratio"] == "number"
@@ -342,9 +343,9 @@ export function procSheet(worksheet: xlsx.WorkSheet): MenuItem[] {
           Name: classData.class_df[i]["Component Description"],
           MenuId: Menu,
           Remark: classData.class_df[i]["Remark"],
-          class: Class,
+          class: Class, // Use the corrected 'Class' variable
           Cycle: Cycle,
-          AircraftType: "normal",
+          AircraftType: "normal", // No specific aircraft, so default to "normal"
           EndTime: null,
           StartTime: null,
           Note: null,
@@ -353,10 +354,12 @@ export function procSheet(worksheet: xlsx.WorkSheet): MenuItem[] {
         items.push(newdat);
       }
       console.table(items);
-      items.forEach((e)=>{food_items.push(e)});
+      items.forEach((e) => {
+        food_items.push(e);
+      });
     }
   }
-  console.log("Res ----------------------")
-  console.table(food_items)
+  console.log("Res ----------------------");
+  console.table(food_items);
   return food_items;
 }

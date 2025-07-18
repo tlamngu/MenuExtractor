@@ -1,7 +1,7 @@
 import { useRef, useEffect, useState } from "react";
 import * as XLSX from "xlsx";
 // Make sure this path is correct for your project structure
-import { procTissueData } from "./utils/extractor-v7"; 
+import { procSheet } from "./utils/extractor-v3"; 
 import { procDoUong } from "./utils/extractor-v8"; 
 
 
@@ -18,7 +18,7 @@ function App() {
     // workbook.SheetNames.forEach((e)=>{
       // procSheet(workbook.Sheets[e])
     // })
-      console.table(procDoUong(workbook.Sheets[workbook.SheetNames[0]]))
+    console.table(procSheet(workbook.Sheets[workbook.SheetNames[0]]))
 
   }
 
