@@ -35,12 +35,11 @@ export function procTissueData(sheet: XLSX.WorkSheet): DataObject[] {
   let processedData = dataAsArrays.filter(row => 
     !row.every(cell => cell === null || cell === undefined || cell === '')
   );
-
   // Nếu không có dữ liệu sau khi lọc, trả về mảng rỗng.
   if (processedData.length === 0) {
     return [];
   }
-  
+  console.log(processedData[0])  
   // Python: df.columns = df.iloc[0]
   // Lấy dòng đầu tiên làm header.
   // Dùng .map(String) để đảm bảo tất cả header đều là chuỗi.

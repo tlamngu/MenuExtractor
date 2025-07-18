@@ -103,6 +103,7 @@ const UNIT_KW = "ĐVT";
 const END_DATA_KW = "Số lượng xe giao đi";
 const NOTE_KW = "ghi chú";
 const REEXPORT_KW = "Tái xuất";
+const NM_KW = "PHIẾU GIAO NHẬN ĐỒ UỐNG"
 
 /**
  * Finds the row and column boundaries of a data table, given the row index of its 'STT' header.
@@ -256,18 +257,25 @@ function extract_table_data(sheetHelper: SheetHelper, boundaries: TableBoundarie
  * @param sheet - The raw worksheet object from the xlsx library.
  * @returns An object containing the structured data, classified by sections.
  */
-export function procDoUong(sheet: XLSX.WorkSheet): AllExtractedData {
+export function procDoUong(sheet: XLSX.WorkSheet): {} {
     console.log("Start processing.");
     
     // Create the helper to provide iloc-like functionality
     const sheetHelper = new SheetHelper(sheet);
     console.log("Shape of table (rows, cols):", sheetHelper.rowCount, sheetHelper.colCount);
-
     const all_extracted_data: AllExtractedData = {};
+    
+    let packed : {spill_id: string, data: AllExtractedData} = {
+        spill_id: '',
+        data: all_extracted_data
+    };
 
     for (let i = 0; i < sheetHelper.rowCount; i++) {
         const cell_value = sheetHelper.getValue(i, 0);
-
+        console.log(cell_value)
+        if(match_kw(cell_value, NM_KW)){
+            packed["spill_id"] = cell_value;
+        }
         if (match_kw(cell_value, STT_KW)) {
             console.log(`\nFound '${STT_KW}' at row ${i}. Starting block analysis.`);
 
@@ -310,9 +318,9 @@ export function procDoUong(sheet: XLSX.WorkSheet): AllExtractedData {
             }
         }
     }
-
+    packed["data"] = all_extracted_data
     console.log("\nProcessing finished.");
-    return all_extracted_data;
+    return packed;
 }
 
 // --- Example Usage ---
