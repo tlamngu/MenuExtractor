@@ -5,6 +5,8 @@ Source language: Python (Google Colab)
 Target language: Typescript
 Version: 1.0.2
 
+Note: File dữ liệu nhận số 3
+
 **/
 import * as xlsx from 'xlsx';
 

@@ -1,3 +1,6 @@
+/*
+Note: File dữ liệu nhận số 1
+*/
 import * as xlsx from "xlsx";
 
 function isNA(value: any): boolean {

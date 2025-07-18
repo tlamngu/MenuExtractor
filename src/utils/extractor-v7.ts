@@ -6,6 +6,8 @@ Target language: Typescript
 Version: 1.0.6
 Agent: Qwen3-CVT-IT-12B-VI
 
+Note: Khăn
+
 **/
 
 import * as XLSX from 'xlsx';

@@ -6,6 +6,8 @@ Target language: Typescript
 Version: 1.0.2
 Agent: Qwen3-CVT-IT-12B
 
+Note: Lịch nhân sự / work plan
+
 **/
 import * as XLSX from 'xlsx';
 
