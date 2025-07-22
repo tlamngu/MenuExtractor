@@ -113,7 +113,7 @@ export function procSheet(worksheet: xlsx.WorkSheet): MenuItem[] {
     if (isNA(row[sub_heads[0]])) {
       continue;
     }
-
+    console.log(row)
     const descriptionValue = row[sub_heads[1]];
     const qtyValue = String(row[sub_heads[2]] || "")
       .trim()
@@ -124,7 +124,7 @@ export function procSheet(worksheet: xlsx.WorkSheet): MenuItem[] {
     const firstColValue = row[sub_heads[0]];
 
     if (
-      isNA(descriptionValue) &&
+      isNA(descriptionValue?.trim()) &&
       qtyValue.includes("menu") &&
       remarkValue.includes("cycle")
     ) {
