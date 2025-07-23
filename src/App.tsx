@@ -18,8 +18,8 @@ function App() {
     // workbook.SheetNames.forEach((e)=>{
       // procSheet(workbook.Sheets[e])
     // })
-    console.log(workbook.SheetNames[4])
-    console.table(procDoUong(workbook.Sheets[workbook.SheetNames[0]]))
+    console.log(workbook.SheetNames[0])
+    console.table(procSheet(workbook.Sheets[workbook.SheetNames[0]]))
 
   }
 

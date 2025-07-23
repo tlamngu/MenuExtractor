@@ -38,6 +38,13 @@ export class Checkpoint {
     return `Checkpoint(x=${this.x}, y=${this.y}, typ=${this.typ})`;
   }
 }
+function match_kw(str: any, kw: string): boolean {
+  // Use `?? ''` to handle null or undefined inputs gracefully
+  return String(str ?? "")
+    .trim()
+    .toLowerCase()
+    .includes(kw.trim().toLowerCase());
+}
 
 /**
  * Processes a worksheet to extract structured data based on keywords and layout.
@@ -128,7 +135,7 @@ export function procSheet(worksheet: xlsx.WorkSheet): MenuItem[] {
       qtyValue.includes("menu") &&
       remarkValue.includes("cycle")
     ) {
-      if (!isDetectingAircraft && !justDetectedAclass) {
+      if (!isDetectingAircraft && !justDetectedAclass && !match_kw(firstColValue, "Dành cho")) {
         if (typeof firstColValue !== "string") continue;
         Classes.push(firstColValue);
         CP.push(new Checkpoint(sub_heads[0], i, "CLASS"));
