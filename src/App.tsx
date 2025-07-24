@@ -2,7 +2,7 @@ import { useRef, useEffect, useState } from "react";
 import * as XLSX from "xlsx";
 // Make sure this path is correct for your project structure
 import { procSheet } from "./utils/extractor-v3"; 
-import { procDoUong } from "./utils/extractor-v8"; 
+import { extractTimeTable } from "./utils/extractor-v9"; 
 
 
 import "./App.css";
@@ -19,7 +19,7 @@ function App() {
       // procSheet(workbook.Sheets[e])
     // })
     console.log(workbook.SheetNames[0])
-    console.table(procSheet(workbook.Sheets[workbook.SheetNames[0]]))
+    console.log(extractTimeTable(workbook.Sheets[workbook.SheetNames[0]]))
 
   }
 
